@@ -65,4 +65,4 @@ for (const name of ['BubbleReminderWorker', 'DailyReminderWorker', 'OverlayPetSe
   assert.match(code, /setSmallIcon\(R\.drawable\.ic_sanhao_notification\)/);
   assert.match(code, /setLargeIcon\(NotificationRabbit\.portrait/);
 }
-console.log('PASS: light haptics/throttling/failure isolation, valid leap-year dates, mini-sized rabbit, three-row overlay menu and notification icon call sites (artwork approval pending)');
+console.log('PASS: light haptics/throttling/failure isolation, valid leap-year dates, mini-sized rabbit, three-row overlay menu and notification icon call sites');
