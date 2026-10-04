@@ -1,0 +1,21 @@
+{
+  "name": "sanhao-tune",
+  "private": true,
+  "version": "2.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build --configLoader runner",
+    "preview": "vite preview",
+    "tauri": "tauri",
+    "check": "tsc --noEmit && node scripts/check-favorite-bubbles.mjs && node scripts/check-archive-image-tap.mjs && node scripts/check-overlay-visibility.mjs && node scripts/check-touch-settings.mjs && node scripts/check-reminder-help-once.mjs"
+  },
+  "dependencies": {
+    "@tauri-apps/api": "^2"
+  },
+  "devDependencies": {
+    "@tauri-apps/cli": "^2",
+    "vite": "^8.0.16",
+    "typescript": "~6.0.3"
+  }
+}

@@ -1,0 +1,8 @@
+<resources>
+    <style name="Theme.sanhao_tune.Starting" parent="Theme.sanhao_tune">
+        <item name="android:windowBackground">@drawable/app_startup</item>
+        <item name="android:windowSplashScreenBackground">@color/app_startup_background</item>
+        <item name="android:windowSplashScreenAnimatedIcon">@mipmap/ic_launcher_foreground</item>
+        <item name="android:windowSplashScreenAnimationDuration">0</item>
+    </style>
+</resources>

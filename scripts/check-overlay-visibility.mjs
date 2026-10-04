@@ -1,0 +1,13 @@
+import assert from 'node:assert/strict';
+import {syncHomeRabbitVisibility} from '../src/overlay-visibility.ts';
+const pet={hidden:false,scale:0.45,x:0.51,y:0.76};
+const speech={hidden:false};const classes=new Set();
+const room={classList:{toggle(name,on){if(on)classes.add(name);else classes.delete(name);}}};
+syncHomeRabbitVisibility(true,pet,speech,room);
+assert.equal(pet.hidden,true);assert.equal(speech.hidden,true);assert.ok(classes.has('overlay-companion-active'));
+syncHomeRabbitVisibility(false,pet,speech,room);
+assert.equal(pet.hidden,false);assert.equal(speech.hidden,true);assert.equal(classes.size,0);
+assert.deepEqual({scale:pet.scale,x:pet.x,y:pet.y},{scale:0.45,x:0.51,y:0.76});
+syncHomeRabbitVisibility(true,pet,speech,room);syncHomeRabbitVisibility(true,pet,speech,room);
+syncHomeRabbitVisibility(false,pet,speech,room);assert.equal(pet.hidden,false);
+console.log('PASS: overlay on hides home rabbit/bubble; overlay off restores rabbit without changing size/position');

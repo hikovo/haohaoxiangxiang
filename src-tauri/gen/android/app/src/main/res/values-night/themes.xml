@@ -1,0 +1,9 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Theme.sanhao_tune" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="android:windowBackground">#fffdf8</item>
+    </style>
+    <style name="Theme.sanhao_tune.Starting" parent="Theme.sanhao_tune">
+        <item name="android:windowBackground">@drawable/app_startup</item>
+    </style>
+</resources>
