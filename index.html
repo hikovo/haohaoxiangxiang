@@ -9,11 +9,48 @@
     <meta name="theme-color" content="transparent" />
     <link rel="stylesheet" href="/src/styles.css" />
     <title>好好想想</title>
+    <script>
+      (function () {
+        var ready = false;
+        var timer;
+        function fail() {
+          if (ready) return;
+          var message = document.getElementById('app-launch-message');
+          var retry = document.getElementById('app-launch-retry');
+          if (!message || !retry) {
+            document.addEventListener('DOMContentLoaded', fail, { once: true });
+            return;
+          }
+          window.clearTimeout(timer);
+          if (message) message.hidden = false;
+          if (retry) {
+            retry.hidden = false;
+            retry.onclick = function () { window.location.reload(); };
+          }
+        }
+        window.__SANHAO_STARTUP__ = {
+          ready: function () {
+            ready = true;
+            window.clearTimeout(timer);
+            var screen = document.getElementById('app-launch-screen');
+            if (screen && screen.parentNode) screen.parentNode.removeChild(screen);
+          },
+          fail: fail
+        };
+        window.addEventListener('error', function (event) {
+          if (event.error || (event.target && event.target.tagName === 'SCRIPT')) fail();
+        }, true);
+        window.addEventListener('unhandledrejection', fail);
+        timer = window.setTimeout(fail, 20000);
+      }());
+    </script>
     <script type="module" src="/src/main.ts" defer></script>
   </head>
   <body>
     <div id="app-launch-screen" role="status" aria-label="兔兔正在准备小家">
       <img src="/rabbit-head.png" alt="三好兔" />
+      <p id="app-launch-message" hidden>兔兔没能准备好小家，请重新打开试试看。<br />如果仍然进不去，可以把手机型号和这个画面发给我们。</p>
+      <button id="app-launch-retry" type="button" hidden>重新打开</button>
     </div>
     <main id="stage" class="desktop-surface" aria-label="三好兔桌宠">
       <button id="pet" type="button" aria-label="三好兔"></button>

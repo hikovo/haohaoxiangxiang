@@ -27,6 +27,8 @@ import { revealConversation } from './chat-reveal';
 import { chooseThinkingText, thinkingDuration } from './chat-thinking';
 import { setupReminderStyles, reminderOptions, fireReminder } from './reminder-styles';
 import { showReminderSettingsHelp } from './reminder-settings-help';
+import { failStartup, finishStartup, startupDeadline } from './startup-state';
+import { comparisonText } from './compat';
 
 type AnimationName =
   | "blink"
@@ -1303,8 +1305,8 @@ for (const field of [timerMinutes, timerSeconds]) field.addEventListener('input'
 });
 
 function pickFresh(answers: string[]) {
-  const recent = chatHistory.filter((item) => item.role === "pet").slice(-20).map((item) => item.message.replace(/[\p{P}\p{S}\s]/gu, ""));
-  const candidates = answers.filter((answer) => !recent.includes(answer.replace(/[\p{P}\p{S}\s]/gu, "")));
+  const recent = chatHistory.filter((item) => item.role === "pet").slice(-20).map((item) => comparisonText(item.message));
+  const candidates = answers.filter((answer) => !recent.includes(comparisonText(answer)));
   const pool = candidates.length ? candidates : answers;
   return pool[Math.floor(Math.random() * pool.length)];
 }
@@ -3091,7 +3093,8 @@ function setupHomeLights() {
       button.style.setProperty('--lamp-spread-height', `${640 * scale}px`);
     });
   };
-  new ResizeObserver(projectLights).observe(room);
+  if (typeof ResizeObserver === 'function') new ResizeObserver(projectLights).observe(room);
+  else window.addEventListener('resize', projectLights);
   projectLights();
   const stored = readJson<boolean[]>(HOME_LIGHTS_KEY, [false, false]);
   document.querySelectorAll<HTMLButtonElement>(".floor-light").forEach((button, index) => {
@@ -3138,7 +3141,7 @@ async function initializeMobileApp() {
     closeSheets(); customize(button.dataset.chatAppearance as AppearanceTarget);
   }));
   // Refresh archive-only captions; retain the previous wording for recovery.
-  const archiveRows = await loadArchives().then(catalog => new Map(catalog.rows.map(item => [item.id, item]))).catch(() => new Map<string, ArchiveItem>());
+  const archiveRows = await startupDeadline(loadArchives().then(catalog => new Map(catalog.rows.map(item => [item.id, item]))), 5000, new Map<string, ArchiveItem>());
   const refreshArchiveRecord = <T extends ChatRecord>(item: T): T => {
     if (item.role !== 'pet' || !item.archive) return item;
     const archive = archiveRows.get(item.archive.id); if (!archive) return item;
@@ -3194,16 +3197,17 @@ async function initializeMobileApp() {
   void renderRabbitMemory();
   setupHomeLights();
   scheduleIdleAction();
-  await Promise.all([refreshOverlayStatus(), loadDailyState()]);
+  finishStartup();
+  await startupDeadline(Promise.all([refreshOverlayStatus(), loadDailyState()]), 3500, undefined);
   await showDailyPromptIfNeeded();
   showDueMemoReminder();
   window.setInterval(checkOtherForegroundReminders, 1000);
 }
 
 if (document.readyState === "loading") {
-  window.addEventListener("DOMContentLoaded", () => { void initializeMobileApp().finally(() => document.querySelector('#app-launch-screen')?.remove()); }, { once: true });
+  window.addEventListener("DOMContentLoaded", () => { void initializeMobileApp().catch(failStartup); }, { once: true });
 } else {
-  void initializeMobileApp().finally(() => document.querySelector('#app-launch-screen')?.remove());
+  void initializeMobileApp().catch(failStartup);
 }
 
 document.addEventListener("visibilitychange", () => {

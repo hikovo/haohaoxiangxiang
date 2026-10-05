@@ -4,7 +4,7 @@
 
 ## 把兔兔带回家
 
-[下载 2.0.0 安装包](https://github.com/hikovo/haohaoxiangxiang/releases/tag/v2.0.0)，打开 APK，按手机提示安装即可。安装包约 185 MB，包含离线回看的素材。
+[下载 2.0.1 安装包](https://github.com/hikovo/haohaoxiangxiang/releases/tag/v2.0.1)，打开 APK，按手机提示安装即可。安装包约 185 MB，包含离线回看的素材。本次更新提升了部分手机的启动兼容性，已有用户可以直接覆盖安装。
 
 - 适用于 **Android 8.0 及以上的 64 位 ARM 手机**（arm64-v8a），例如小米、OPPO、vivo、荣耀、三星、一加、realme 等品牌的符合要求的机型。
 - **华为手机需支持安装 Android APK**。本版本不是原生鸿蒙应用，不保证鸿蒙兼容环境下的功能可用。

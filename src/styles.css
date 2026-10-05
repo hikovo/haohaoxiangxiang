@@ -3137,5 +3137,26 @@ input.wheel-trigger::-webkit-calendar-picker-indicator { opacity: 0; width: 0; p
 #daily-answer-panel .daily-answer-actions button { margin: 0; min-height: 46px; font-size: 15px; }
 #daily-answer-panel #daily-dismiss { display: block; margin: 0; padding: 8px; border: 1px solid #efdbd6; border-radius: 10px; background: #fffdf8; color: #a17e83; font-size: 12px; white-space: nowrap; }
 #timer-panel .timer-presets button { font-size: 16px; line-height: 1.4; font-weight: 500; }
-#app-launch-screen { position: fixed; inset: 0; z-index: 10000; display: grid; place-items: center; background: #fffdf8; }
+#app-launch-screen { position: fixed; top: 0; right: 0; bottom: 0; left: 0; z-index: 10000; display: flex; flex-direction: column; align-items: center; justify-content: center; background: #fffdf8; }
 #app-launch-screen img { width: 104px; height: 118px; object-fit: contain; }
+#app-launch-message { max-width: 290px; padding: 0 20px; margin: 22px 0 16px; color: #78565e; font-size: 15px; line-height: 1.8; text-align: center; }
+#app-launch-retry { border: 0; border-radius: 14px; padding: 12px 24px; background: #efb1bd; color: #674d52; font: inherit; }
+#app-launch-screen [hidden] { display: none !important; }
+
+@supports not (width: min(1px, 2px)) {
+  .home-board { width: 62vw; max-width: 270px; }
+  .page-header { padding-top: 18px; }
+  .mobile-sheet { max-height: 78vh; max-height: calc(var(--app-height, 100vh) - 8px); padding-bottom: 12px; }
+  .mobile-dock { padding: 6px 10px 8px; }
+  .chat-message { max-width: 72vw; }
+  .chat-customizer { width: 310px; max-width: calc(100vw - 40px); padding-bottom: 22px; }
+  .image-cropper { width: 350px; max-width: calc(100vw - 28px); }
+  .reminder-system-help { width: 340px; max-width: calc(100vw - 40px); }
+  .archive-media-frame, .archive-media-frame > img, .archive-media-frame > video { max-width: 220px; max-width: calc(100vw - 110px); }
+  .archive-media-frame > img, .archive-media-frame > video { max-height: 300px; }
+  #page-chat .archive-file-card { width: 250px; max-width: calc(100vw - 110px); }
+}
+@supports not (height: 100dvh) {
+  .rabbit-memory-sheet { max-height: 84vh; }
+  .reminder-system-help { max-height: calc(100vh - 48px); }
+}

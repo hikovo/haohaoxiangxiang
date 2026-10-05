@@ -1,4 +1,5 @@
 import { cropImage } from "./image-cropper";
+import { mediaId } from "./compat";
 // Note bodies keep stable references; binary media lives separately in IndexedDB.
 const DATABASE = "sanhao-tu.note-media.v1";
 const STORE = "media";
@@ -159,7 +160,7 @@ export function setupNoteMedia(editor: HTMLElement, input: HTMLInputElement, add
       notify(kind === "video" ? "请选择 200MB 以内的视频" : "请选择 20MB 以内的图片"); return;
     }
     const session = generation;
-    const id = `note-media-${crypto.randomUUID()}`;
+    const id = `note-media-${mediaId()}`;
     busy = true;
     addButton.disabled = true;
     try {

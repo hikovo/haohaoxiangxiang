@@ -1,6 +1,6 @@
 [package]
 name = "sanhao-tune"
-version = "2.0.0"
+version = "2.0.1"
 description = "一只喜欢跳舞、发呆和窝在小家里陪伴你的三好兔～ᕱ⑅ᕱ ♡"
 authors = ["hikovo"]
 edition = "2021"

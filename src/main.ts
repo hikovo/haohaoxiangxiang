@@ -1,3 +1,6 @@
+import "./compat";
+import { failStartup, finishStartup } from "./startup-state";
+
 const isAndroid =
   /Android/i.test(navigator.userAgent) ||
   new URLSearchParams(window.location.search).get("mobile") === "1";
@@ -5,8 +8,7 @@ const isAndroid =
 document.documentElement.classList.add(isAndroid ? "android-app" : "desktop-app");
 
 if (isAndroid) {
-  void import("./mobile");
+  void import("./mobile").catch(failStartup);
 } else {
-  document.querySelector('#app-launch-screen')?.remove();
-  void import("./desktop");
+  void import("./desktop").then(finishStartup, failStartup);
 }
